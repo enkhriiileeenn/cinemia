@@ -1,5 +1,5 @@
 """"
-Movie Theatre Booking System with Seats
+Movie Theatre 
 """
 #ask for name and number
 print("*******************************")
