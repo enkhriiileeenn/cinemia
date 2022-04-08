@@ -1,108 +1,140 @@
+""""
+Movie Theatre Booking System with Seats
 """
-'Welcome to Em's Movie Cinema'
-"""
-#Tuple Movie Choices
-movies = ('1:Business Propasal','2:Twenty One Twenty Five','3:Thirty Nine','4:Flower of Evil', '5:It')
-sessions = ('1:morning', '2:evening', '3:afternoon')
-#Seats for each movie and each sessions
-movie1 = {'morning': [], 'evening' :[], 'afternoon': []}
-movie2 =  {'morning': [], 'evening' :[], 'afternoon': []}
-movie3 = {'morning': [], 'evening' :[], 'afternoon': []}
-movie4 =  {'morning': [], 'evening' :[], 'afternoon': []}
-movie5 =  {'morning': [], 'evening' :[], 'afternoon': []}
+#ask for name and number
+print("*******************************")
+print("Welcome to Em Movie Theater!")
+print("*******************************")
+name = input("What is your name? ")
+number = None
+#checks if input is a number
+while not isinstance (number, int):
+        try:
+            number = int(input("What is your phone number? Please enter a valid phone number? "))
+        except:
+            print (' Please enter a valid phone number.')
+#books movie
+movies = ['a. Despicable Me', 'b. Cocomelon', 'c. Superman']
+def booking():
 
+    #useful variables
+    global movies
 
+    print("----------------------------")
+    print("Today's movies")
+    print("----------------------------")
 
-print("Welcome to the Cinemia")
-#name = input('What is your name? ')
-#phone_number = input ('What is your phone number? ')
-name = 'Em'
-phone_number = 91929192
+    #prints movies
+    for movie in movies:
+        print (movie)
 
-print("These are todays movies")
-print("*************************************")
-for movie in movies:
-    print(movie)
+    movie_choice = None
 
-movie_choice = None
-while movie_choice not in range(1,6):
-    try:
-        movie_choice = int(input ('Please, enter your movie: '))
-    except:
-        print ('Please enter a number between 1 and 5')
-        movie_choice = None
+    #match cases users input to the movies
+    while movie_choice not in ('a','b','c'):
 
-print("Available sessions")
-print("*************************************")
-for session in sessions:
-    print(session)
+        movie_choice = input ('Please, select a movie (a/b/c): ')
 
-session_choice = None
-while session_choice not in sessions:
-    try:
-        movie_choice = int(input ('Please, enter your session: '))
-    except:
-        print ('Please enter a number between 1 and 4')
-        movie_choice = None
+        match movie_choice:
+            case 'a':
+                print('You have chosen', movies[0])
+                chosen_movie = movies[0]
+            case 'b':
+                print('You have chosen', movies[1])
+                chosen_movie = movies[1]
+            case 'c':
+                print('You have chosen', movies[2])
+                chosen_movie = movies[2]
+            case '':
+                print('Invalid choice')
+    return chosen_movie
+#books time
+times = ['a. Morning', 'b. Afternoon', 'c. Evening']
+def booking_t():        
+    global times
+    #prints time
+    for time in times:
+        print (time)
 
-    sessions_choice = input ('Please, enter your sessions: ')
+    time_choice = None
 
-#Finally print user's choices
-print (f"Name: {name}, Phone number: {phone_number}, Movie: {movie_choice}")
-#movie seat choices 
-available_seats = ["1","2","3","6", "7", "8"]
-print(available_seats)
-def seats(seat):
-    seat = seat.lowers ()
-    match seat:
-        case"1":
-            return 0
-        case"2":
-            return 1
-        case"3":
-            return 2
-        case"6":
-            return 3
-        case"7":
-            return 4
-        case"8":
-            return 5
-        case _: 
-            return "Invalid seat"
-seat = input("These seats are available, which seat would you like to choose? ")
-if (seats(seat))== "Invalid seat":
-    while (seats(seat)) == "Invalid seat":
-        seat == input("These seats are available, which would you like?  ")
-        if (seats(seat) !="Invalid seat":
-            available_seats[seats[seat]] = "(X)"
+    #match cases users input to the session of movie
+    while time_choice not in ('a','b','c'):
+
+        time_choice = input ('Please, select time (a/b/c): ')
+
+        match time_choice:
+            case 'a':
+                print('You have chosen', times[0])
+                chosen_time = times[0]
+            case 'b':
+                print('You have chosen', times[1])
+                chosen_time = times[1]
+            case 'c':
+                print('You have chosen', times[2])
+                chosen_time = times[2]
+            case _:
+                print('Invalid choice')
+    return chosen_time
+
+#seats
+movie_seats = (([],[],[]),([],[],[]),([],[],[]))
+#for morning cocomelonem
+
+def movie_seat(chosen_movie, chosen_time): 
+    booked_seats=[]
+    while True:  
+        movie_index = movies.index(chosen_movie)
+        time_index = times.index(chosen_time)
+        #print seats and check if seat is already booked
+        seats_txt = ''
+        for seat_n in range(1,11):
+            if seat_n in movie_seats[movie_index][time_index]:
+                seats_txt = seats_txt + ' X'
+            else:
+                seats_txt = seats_txt + f' {seat_n}'
+
+        print (seats_txt)
+        #asks for seat and appends it into booked_seats
+        chosen_seat = None
+        while chosen_seat not in range(1,11):
+            #Validate that while not chosen_seat.isnumber():  
+            chosen_seat = int(input("What seat do you want? "))
+            
+            if chosen_seat in movie_seats[movie_index][time_index]:
+                print("Seat has been chosen, Please choose a different seat.")
+            else:
+                movie_seats[movie_index][time_index].append(chosen_seat)
+                booked_seats.append(chosen_seat)
+
+        #if the user wants it reruns the program
+        choose_again = None
+        choose_again = input("Do you want to book a seat again?(y/n): ")
+        if choose_again == 'n':
+            print("Thanks")
             break
-    else:
-        print(" ")
-        print("Error, your seat is not available")
-        print(" ")
-        print(available_seats)
-        seat = input("These seats are available, which would you like? ")     
-        print(" ")       
+    return booked_seats
 
-available_seats[seats[seat]] = "(X)"
-print(available_seats):
+#confirmation function
+def confirmation(chosen_movie, chosen_time):
+    print("So, ", name.title(), "and your phone number ", number, ". You have chosen ", chosen_movie, "at ", chosen_time, ". Your seat is at", chosen_seat), 
+
+#calls and reruns the program if there was a problem
+while True:  
+    chosen_movie = booking()
+    chosen_time = booking_t()
+    chosen_seat = movie_seat(chosen_movie, chosen_time)
+    #confirmation(chosen_movie, chosen_time)
 
 
-
-
-book_again = True 
-
-while book_again:
-    Ticket_Sytem()
-    #customers final decisions
-    answer = ''
-    while answer not in ("yes", "no"):
-        answer = input("Do you want to book your movie ticket again? ")
-        answer = answer.lower ()
-
-        if answer == "yes":
-            book_again = True 
-        else:
-            book_again = False
-
-        print('Thank you for visitng us and enjoy your movie') 
+    #confirm information
+    print("Is your name ", name.title(), "and your phone number ", number, ". Have you chosen ", chosen_movie, "at ", chosen_time, ". Is your seat at", chosen_seat)
+    answer = None
+    while answer not in ('y','n'):
+        answer = (input("Is this information correct (y/n)? ")).lower()
+    answer = answer.lower()
+    if answer=='y':   
+        print("Final Information entered")     
+        print("---------------------------------------")
+        print("So, your name is", name.title(), "and your phone number ", number, ". You have chosen ", chosen_movie, "at ", chosen_time, ". Your seat is at", chosen_seat)
+        break
