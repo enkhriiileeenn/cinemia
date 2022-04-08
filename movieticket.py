@@ -1,7 +1,11 @@
-""""
+
+       """"
 Movie Theatre 
 """
 #ask for name and number
+import email
+
+
 print("*******************************")
 print("Welcome to Em Movie Theater!")
 print("*******************************")
@@ -86,7 +90,7 @@ def movie_seat(chosen_movie, chosen_time):
     while True:  
         movie_index = movies.index(chosen_movie)
         time_index = times.index(chosen_time)
-        #print seats and check if seat is already booked
+      
         seats_txt = ''
         for seat_n in range(1,11):
             if seat_n in movie_seats[movie_index][time_index]:
@@ -118,10 +122,19 @@ def movie_seat(chosen_movie, chosen_time):
 #confirmation function
 def confirmation(chosen_movie, chosen_time):
     print("So, ", name.title(), "and your phone number ", number, ". You have chosen ", chosen_movie, "at ", chosen_time, ". Your seat is at", chosen_seat), 
+    choose_again = None
+    choose_again = input("Is this information correct?(y/n): ")
+    if choose_again == 'y':
+        print("Thanks")
+        return False
+    else:
+        return True
 
 #calls and reruns the program if there was a problem
 while True:  
     chosen_movie = booking()
     chosen_time = booking_t()
     chosen_seat = movie_seat(chosen_movie, chosen_time)
-    #confirmation(chosen_movie, chosen_time)
+    if not confirmation(chosen_movie, chosen_time):
+        break
+    
