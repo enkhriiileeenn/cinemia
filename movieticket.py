@@ -125,16 +125,3 @@ while True:
     chosen_time = booking_t()
     chosen_seat = movie_seat(chosen_movie, chosen_time)
     #confirmation(chosen_movie, chosen_time)
-
-
-    #confirm information
-    print("Is your name ", name.title(), "and your phone number ", number, ". Have you chosen ", chosen_movie, "at ", chosen_time, ". Is your seat at", chosen_seat)
-    answer = None
-    while answer not in ('y','n'):
-        answer = (input("Is this information correct (y/n)? ")).lower()
-    answer = answer.lower()
-    if answer=='y':   
-        print("Final Information entered")     
-        print("---------------------------------------")
-        print("So, your name is", name.title(), "and your phone number ", number, ". You have chosen ", chosen_movie, "at ", chosen_time, ". Your seat is at", chosen_seat)
-        break
